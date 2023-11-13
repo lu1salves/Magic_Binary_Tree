@@ -1,0 +1,35 @@
+nodo_exemplo = Nodulo(value=1)
+nodo_exemplo.Dano_ataque = 50
+nodo_exemplo.Dano_defesa = 50
+nodo_exemplo.Eh_magico = True
+nodo_exemplo.Nome = "GELO"
+nodo_exemplo.Descricao = "A Espada do Gelo de Ned Stark é uma lendária arma forjada com maestria a partir de aço valiriano, um metal precioso e raro. Com uma lâmina afiada como o frio invernal do Norte, esta espada é conhecida por sua habilidade única de canalizar o poder do gelo"
+----------------------------
+nodo_exemplo = Nodulo(value=2)
+nodo_exemplo.Dano_ataque = 0
+nodo_exemplo.Dano_defesa = 100
+nodo_exemplo.Eh_magico = True
+nodo_exemplo.Nome = "Capa da Invisibilidade"
+nodo_exemplo.Descricao = "Uma capa que torna o usuário invisível. Foi uma das Relíquias da Morte e pertencia a Harry Potter."
+----------------------------
+nodo_exemplo = Nodulo(value=3)
+nodo_exemplo.Dano_ataque = 100
+nodo_exemplo.Dano_defesa = 0
+nodo_exemplo.Eh_magico = True
+nodo_exemplo.Nome = "Kitetsu Swords"
+nodo_exemplo.Descricao = "Uma série de espadas amaldiçoadas, como a Sandai Kitetsu, a Nidai Kitetsu e a Shodai Kitetsu. Zoro possui a Sandai Kitetsu."
+----------------------------
+nodo_exemplo = Nodulo(value=4)
+nodo_exemplo.Dano_ataque = 20
+nodo_exemplo.Dano_defesa = 100
+nodo_exemplo.Eh_magico = True
+nodo_exemplo.Nome = "Escudo do Dia Quebrado"
+nodo_exemplo.Descricao = "Um imponente escudo adornado com uma gravura de um sol radiante, simbolizando a luz e a justiça que Leona representa. Feito de materiais resistentes, o Escudo do Dia Quebrado é tanto uma poderosa defesa quanto um símbolo de honra. Sua superfície brilha com uma luz dourada, refletindo a devoção inabalável de Leona à causa da justiça."
+-----------------------------
+nodo_exemplo = Nodulo(value=5)
+nodo_exemplo.Dano_ataque = 100
+nodo_exemplo.Dano_defesa = 20
+nodo_exemplo.Eh_magico = True
+nodo_exemplo.Nome = "Duplas Espinhosas"
+nodo_exemplo.Descricao = "As Duplas Espinhosas são um par de pistolas elegantes e mortíferas nas mãos habilidosas de Miss Fortune. Forjadas em uma mistura de metal resistente e encantamentos arcanos, essas pistolas tornaram-se a extensão perfeita da vontade da Caçadora de Recompensas.."
+----------------------------
