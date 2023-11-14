@@ -2,7 +2,7 @@ from cgitb import enable
 from lib2to3.pgen2.token import NUMBER
 from tkinter import *
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, Text
 from random import randint
 from time import sleep
 from tkinter.messagebox import showerror, showinfo
@@ -30,7 +30,6 @@ MIN_VALUE = 0
 ANIMATION_DELAY = 1
 
 rootNode = None
-window = Tk()
 
 class Node:
     def __init__(self, value):
@@ -467,6 +466,18 @@ def onClickGenerateRandomTree():
     canvas.delete("all")
     drawTree(rootNode, rootPositionX, rootPositionY, 0, canvas, window)
 
+def onClickItems(none):
+    janela_item = tk.Tk()
+    janela_item.geometry("1200x700")
+    janela_item.title("Itens Mágicos")
+    description = """A Espada do Gelo de Ned Stark é uma lendária arma forjada com maestria a partir de aço valiriano, um metal precioso e raro. Com umalâmina afiada como o frio invernal do Norte, esta espada é conhecida por sua habilidade única de canalizar o poder do gelo\nDano_ataque = 50\nDano_defesa = 50\nEh_magico = True\nNome = "GELO"\n----------------------------\nDescricao = "Uma capa que torna o usuário invisível. Foi uma das Relíquias da Morte e pertencia a Harry Potter."\nDano_ataque = 0\nDano_defesa = 100\nEh_magico = True\nNome = "Capa da Invisibilidade"\n----------------------------\nDescricao = "Uma série de espadas amaldiçoadas, como a Sandai Kitetsu, a Nidai Kitetsu e a Shodai Kitetsu. Zoro possui a Sandai Kitetsu."\nDano_ataque = 100\nDano_defesa = 0\nEh_magico = True\nNome = "Kitetsu Swords"\n----------------------------\nDescricao = "Um imponente escudo adornado com uma gravura de um sol radiante, simbolizando a luz e a justiça que Leona representa. Feito de materiais resistentes, o Escudo do Dia Quebrado é tanto uma poderosa defesa quanto um símbolo de honra. Sua superfície brilha com uma luz dourada, refletindo a devoção inabalável de Leona à causa da justiça."\nDano_ataque = 20\nDano_defesa = 100\nEh_magico = True\nNome = "Escudo do Dia Quebrado"\n-----------------------------\nDescricao = "As Duplas Espinhosas são um par de pistolas elegantes e mortíferas nas mãos habilidosas de Miss Fortune. Forjadas em uma mistura de metal resistente e encantamentos arcanos, essas pistolas tornaram-se a extensão perfeita da vontade da Caçadora de Recompensas.."\nDano_ataque = 100\nDano_defesa = 20\nEh_magico = True\nNome = "Duplas Espinhosas"\n----------------------------\n"""
+   
+    texto = Label(janela_item, text=description)
+    texto.grid(row=2, column=2,columnspan=1)
+
+  
+    janela_item.mainloop()
+
 def disableUI():
     insertButton["state"] = DISABLED
     generateRandomTreeButton["state"] = DISABLED
@@ -481,27 +492,60 @@ def enableUI():
     searchButton["state"] = NORMAL
     inputField["state"] = NORMAL
 
-window.geometry(str(WINDOW_WIDTH) + "x" + str(WINDOW_HEIGHT) + "+100-100")
-window.resizable(False, False)
+def abrir_janela_principal():
+    janela_bem_vindo.destroy()
+    mostrar_janela_principal()
+
+def mostrar_janela_principal():
+    window.deiconify()
+
+janela_bem_vindo = tk.Tk()
+janela_bem_vindo.title("Seja Bem-Vindo")
+janela_bem_vindo.geometry("1200x700")
+
+label_boas_vindas = ttk.Label(janela_bem_vindo, text="Seja bem-vindo ao Magic Tree!")
+label_boas_vindas.pack(pady=20)
+
+botao_iniciar = ttk.Button(janela_bem_vindo, text="Iniciar", command=abrir_janela_principal)
+botao_iniciar.pack()
+
+# Janela principal (inicialmente oculta)
+window = tk.Tk()
+window.withdraw()
+
+# Configuração da janela principal
 window.title("Binary Search Tree Visualizer")
+window.geometry("1200x1200")
 
-canvas = Canvas(window, bg=BACKGROUND_COLOR)
-canvas.pack(side=TOP, fill=BOTH, expand=2)
+# Frame lateral para o menu
+menu_frame = tk.Frame(window, width=200, bg="lightgray")
+menu_frame.grid(row=0, column=0, sticky="nsew")
 
-generateRandomTreeButton = Button(window, text="Generate Random Tree", font=("Arial 15"), 
-                      command=lambda:onClickGenerateRandomTree())
-generateRandomTreeButton.pack(side=LEFT, fill=X, expand=1)
+#menu lateral
+inputField = tk.Entry(menu_frame)
+inputField.pack(pady=10)
 
-insertButton = Button(window, text="Insert", font=("Arial 15"), command=lambda:onClickInsert(inputField.get()))
-insertButton.pack(side=LEFT, fill=X, expand=1)
+generateRandomTreeButton = ttk.Button(menu_frame, text="Generate Random Tree", command=onClickGenerateRandomTree)
+generateRandomTreeButton.pack(pady=10)
 
-deleteButton = Button(window, text="Delete", font=("Arial 15"), command=lambda:onClickDelete(inputField.get()))
-deleteButton.pack(side=LEFT, fill=X, expand=1)
+insertButton = ttk.Button(menu_frame, text="Insert", command=lambda: onClickInsert(inputField.get()))
+insertButton.pack(pady=10)
 
-searchButton = Button(window, text="Search", font=("Arial 15"), command=lambda:onClickSearch(inputField.get()))
-searchButton.pack(side=LEFT, fill=X, expand=1)
+deleteButton = ttk.Button(menu_frame, text="Delete", command=lambda: onClickDelete(inputField.get()))
+deleteButton.pack(pady=10)
 
-inputField = Entry(window, font=("Arial 15"))
-inputField.pack(side=LEFT, expand=0)
+searchButton = ttk.Button(menu_frame, text="Search", command=lambda: onClickSearch(inputField.get()))
+searchButton.pack(pady=10)
 
-window.mainloop()
+itemButton = ttk.Button(menu_frame, text="Itens Mágicos", command=lambda: onClickItems(inputField.get()))
+itemButton.pack(pady=10)
+
+# Canvas usando grid
+canvas = tk.Canvas(window, width=1000, height=1200, bg="white")
+canvas.grid(row=0, column=1, sticky="nsew")
+
+# Configuração de peso para permitir redimensionamento
+window.grid_rowconfigure(0, weight=1)
+window.grid_columnconfigure(1, weight=1)
+
+janela_bem_vindo.mainloop()

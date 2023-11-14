@@ -2,7 +2,7 @@ import macros
 from tkinter.messagebox import showerror, showinfo
 from tkinter import *
 import tkinter as tk
-from primeira_janela import clearCanvasAndDrawTree, createRectangleWithText, createOvalWithText
+from canvas import createOvalWithText, createRectangleWithText, 
 from time import sleep
 
 class Nodulo:
@@ -50,7 +50,6 @@ def Calcular_posicao_ponteiro_direita(posicao_x_pai, posicao_y_pai, nodulo_altur
         posicao_x_nodulo_direita = posicao_x_pai + ((macros.WINDOW_WIDTH - macros.X_PADDING) / pow(2, nodulo_altura)) / 2
         posicao_y_nodulo_direita = posicao_y_pai + macros.NODE_RADIUS * 4
         return (posicao_x_nodulo_direita, posicao_y_nodulo_direita)
-
 
 def Inserir_nodulo(Raiz_no, valor_nodulo, posicao_raiz_x, posicao_raiz_y, nodulo_altura, canvas, janela):
         if nodulo_altura > macros.MAX_DEPTH:
@@ -100,7 +99,6 @@ def Inserir_nodulo(Raiz_no, valor_nodulo, posicao_raiz_x, posicao_raiz_y, nodulo
         
         return Raiz_no
 
-
 def Inserir_nodulo_sem_animacao(Raiz_No, value, nodulo_altura):
         if nodulo_altura > macros.MAX_DEPTH:
             return Raiz_No
@@ -116,7 +114,6 @@ def Inserir_nodulo_sem_animacao(Raiz_No, value, nodulo_altura):
             Raiz_No.Ponteiro_direita = Inserir_nodulo_sem_animacao(Raiz_No.Ponteiro_direita, Raiz_No.value, nodulo_altura + 1)
 
         return Raiz_No
-
 
 def busca_nodulo_arvore(Raiz_No, value, posicao_raiz_x, posicao_raiz_y, nodulo_altura, canvas, janela):
     if Raiz_No is None:
@@ -162,7 +159,6 @@ def busca_nodulo_arvore(Raiz_No, value, posicao_raiz_x, posicao_raiz_y, nodulo_a
                             value, macros.HIGHLIGHT_TEXT_COLOR, macros.FONT_SIZE)
         janela.update()
         sleep(macros.ANIMATION_DELAY)
-
 
 def deleteNode(Raiz_No, value, posicao_raiz_x, posicao_raiz_y, nodulo_altura, canvas, janela):
     if Raiz_No is None:
@@ -282,7 +278,6 @@ def deleteNode(Raiz_No, value, posicao_raiz_x, posicao_raiz_y, nodulo_altura, ca
                                              canvas, janela)
     return Raiz_No
 
-
 def getMinNodeValue(Raiz_No, posicao_raiz_x, posicao_raiz_y, nodulo_altura, canvas, janela):
 
     if Raiz_No.leftChild is None:
@@ -309,7 +304,6 @@ def getMinNodeValue(Raiz_No, posicao_raiz_x, posicao_raiz_y, nodulo_altura, canv
                             nodulo_altura + 1, 
                             canvas, janela)
 
-    
 def getMaxNodeValue(Raiz_No, posicao_raiz_x, posicao_raiz_y, nodulo_altura, canvas, janela):
 
     if Raiz_No.rightChild is None:
@@ -335,5 +329,3 @@ def getMaxNodeValue(Raiz_No, posicao_raiz_x, posicao_raiz_y, nodulo_altura, canv
                                 rightChildPositionX, rightChildPositionY, 
                                 nodulo_altura + 1, 
                                 canvas, janela)
-
-
