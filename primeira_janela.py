@@ -50,7 +50,10 @@ window.geometry("1200x1200")
 menu_frame = tk.Frame(window, width=200, bg="lightgray")
 menu_frame.grid(row=0, column=0, sticky="nsew")
 
-# Botões no menu lateral
+#menu lateral
+inputField = tk.Entry(menu_frame)
+inputField.pack(pady=10)
+
 generateRandomTreeButton = ttk.Button(menu_frame, text="Generate Random Tree", command=onClickGenerateRandomTree)
 generateRandomTreeButton.pack(pady=10)
 
@@ -66,10 +69,6 @@ searchButton.pack(pady=10)
 # Canvas usando grid
 canvas = tk.Canvas(window, width=1000, height=1200, bg="white")
 canvas.grid(row=0, column=1, sticky="nsew")
-
-# Entrada de texto
-inputField = tk.Entry(window)
-inputField.grid(row=1, column=1, sticky="ew")
 
 # Configuração de peso para permitir redimensionamento
 window.grid_rowconfigure(0, weight=1)
