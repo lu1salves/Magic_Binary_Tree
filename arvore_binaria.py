@@ -5,7 +5,6 @@ import tkinter as tk
 from primeira_janela import clearCanvasAndDrawTree, createRectangleWithText, createOvalWithText
 from time import sleep
 
-
 class Nodulo:
     
     def __init__(self, value):
@@ -119,7 +118,7 @@ def Inserir_nodulo_sem_animacao(Raiz_No, value, nodulo_altura):
         return Raiz_No
 
 
-def searchTree(Raiz_No, value, posicao_raiz_x, posicao_raiz_y, nodulo_altura, canvas, janela):
+def busca_nodulo_arvore(Raiz_No, value, posicao_raiz_x, posicao_raiz_y, nodulo_altura, canvas, janela):
     if Raiz_No is None:
         showinfo(title="Search", message="Node not found")
         return
@@ -138,7 +137,7 @@ def searchTree(Raiz_No, value, posicao_raiz_x, posicao_raiz_y, nodulo_altura, ca
         sleep(macros.ANIMATION_DELAY)
 
         leftChildPositionX, leftChildPositionY = Calcular_posicao_ponteiro_esquerda(posicao_raiz_x, posicao_raiz_y, nodulo_altura + 1)
-        searchTree(Raiz_No.leftChild, value, 
+        busca_nodulo_arvore(Raiz_No.leftChild, value, 
                     leftChildPositionX, leftChildPositionY, 
                     nodulo_altura + 1, 
                     canvas, janela)
@@ -150,7 +149,7 @@ def searchTree(Raiz_No, value, posicao_raiz_x, posicao_raiz_y, nodulo_altura, ca
         sleep(macros.ANIMATION_DELAY)
         
         rightChildPositionX, rightChildPositionY = Calcular_posicao_ponteiro_direita(posicao_raiz_x, posicao_raiz_y, nodulo_altura + 1)
-        searchTree(Raiz_No.rightChild, value, 
+        busca_nodulo_arvore(Raiz_No.rightChild, value, 
                     rightChildPositionX, rightChildPositionY,
                     nodulo_altura + 1, 
                     canvas, janela)

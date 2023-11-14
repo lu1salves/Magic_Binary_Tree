@@ -1,11 +1,10 @@
 import macros
-from tkinter.messagebox import showerror, showinfo
+from tkinter.messagebox import showerror
 from tkinter import *
-import tkinter as tk
 from time import sleep
 from random import randint
-from venv import create
 import arvore_binaria
+from main import janela, canvas
 
 def Desenha_arvore(Nodulo_raiz, Raiz_posicao_x, Raiz_posicao_y, Nodulo_altura, canvas, janela):
     if Nodulo_raiz is None:
@@ -113,7 +112,7 @@ def Botao_busca(value):
 
     Desabilitar_interface()
 
-    searchTree(Nodulo_raiz, value, Raiz_posicao_x, Raiz_posicao_y, 0, canvas, janela)
+    arvore_binaria.busca_nodulo_arvore(Nodulo_raiz, value, Raiz_posicao_x, Raiz_posicao_y, 0, canvas, janela)
 
     sleep(1)
 
@@ -136,7 +135,7 @@ def Botao_deletar(value):
 
     Desabilitar_interface()
 
-    Nodulo_raiz = deleteNode(Nodulo_raiz, value, Raiz_posicao_x, Raiz_posicao_y, 0, canvas, janela)
+    Nodulo_raiz = arvore_binaria.busca_nodulo_arvore(Nodulo_raiz, value, Raiz_posicao_x, Raiz_posicao_y, 0, canvas, janela)
 
     sleep(1)
 
