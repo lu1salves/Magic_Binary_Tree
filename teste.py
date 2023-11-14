@@ -48,7 +48,7 @@ def calculateRightChildPosition(parentPositionX, parentPositionY, childDepth):
     rightChildPositionY = parentPositionY + NODE_RADIUS * 4
     return (rightChildPositionX, rightChildPositionY)
 
-
+#feito
 def insertNode(rootNode, value, rootPositionX, rootPositionY, nodeDepth, canvas, window):
     if nodeDepth > MAX_DEPTH:
         showinfo(title="Insert", message="Max depth reached")

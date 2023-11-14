@@ -1,13 +1,37 @@
 """
     Nesse arquivo estão todas as macros que foram usadas no projeto
 
-    NODE_RADIUS:
+    NODE_RADIUS: Tamanho do círculo do Nódulo da árvore
 
-    BACKGROUND_COLOR:
+    BACKGROUND_COLOR: Cor do fundo do visualizador
 
-    NODE_COLOR:
+    NODE_COLOR: Cor do nódulo
 
+    HIGHLIGHT_COLOR
+
+    HIGHLIGHT_TEXT_COLOR
+
+    TEXT_COLOR: Cor do texto escrito durante as animações
+
+    LINE_COLOR: Cor das linhas que ligam os nódulos da árvore
+
+    FONT_SIZE: Tamanho da fonte do texto escrito durante as animações
+
+    WINDOW_WIDTH: Tamanho do comprimento da janela do visualizador
+
+    WINDOW_HEIGHT: Tamanho da altura da janela do visualizador
+
+    X_PADDING:
+
+    Y_PADDING:
     
+    MAX_DEPTH:
+
+    MAX_VALUE:
+
+    MIN_VALUE:
+
+    ANIMATION_DELAY: Tempo de delay entre animações
 
 """
 
