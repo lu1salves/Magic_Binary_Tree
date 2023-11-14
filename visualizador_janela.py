@@ -1,42 +1,47 @@
+import macros
+from tkinter.messagebox import showerror, showinfo
+from tkinter import *
+import tkinter as tk
+from time import sleep
+from random import randint
+from venv import create
+import arvore_binaria
 
-
-
-
-def drawTree(rootNode, rootPositionX, rootPositionY, nodeDepth, canvas, window):
-    if rootNode is None:
+def Desenha_arvore(Nodulo_raiz, Raiz_posicao_x, Raiz_posicao_y, Nodulo_altura, canvas, janela):
+    if Nodulo_raiz is None:
         return
 
-    if rootNode.leftChild is not None:
-        leftChildPositionX, leftChildPositionY = calculateLeftChildPosition(rootPositionX, rootPositionY, nodeDepth + 1)
-        canvas.create_line(rootPositionX, rootPositionY,
-                           leftChildPositionX, leftChildPositionY, 
-                           fill=LINE_COLOR, width=5)
-        drawTree(rootNode.leftChild, 
-                 leftChildPositionX, leftChildPositionY, 
-                 nodeDepth + 1,
-                 canvas, window)
+    if Nodulo_raiz.ponteiro_esquerda is not None:
+        Ponteiro_esquerda_x, Ponteiro_esquerda_y = arvore_binaria.Calcular_posicao_ponteiro_esquerda(Raiz_posicao_x, Raiz_posicao_y, Nodulo_altura + 1)
+        canvas.create_line(Raiz_posicao_x, Raiz_posicao_y,
+                           Ponteiro_esquerda_x, Ponteiro_esquerda_y, 
+                           fill=macros.LINE_COLOR, width=5)
+        Desenha_arvore(Nodulo_raiz.ponteiro_esquerda, 
+                 Ponteiro_esquerda_x, Ponteiro_esquerda_y, 
+                 Nodulo_altura + 1,
+                 canvas, janela)
 
-    if rootNode.rightChild is not None:
-        rightChildPositionX, rightChildPositionY = calculateRightChildPosition(rootPositionX, rootPositionY, nodeDepth + 1)
-        canvas.create_line(rootPositionX, rootPositionY,
-                           rightChildPositionX, rightChildPositionY, 
-                           fill=LINE_COLOR, width=5)
-        drawTree(rootNode.rightChild, 
-                 rightChildPositionX, rightChildPositionY, 
-                 nodeDepth + 1,
-                 canvas, window)
+    if Nodulo_raiz.ponteiro_direita is not None:
+        Ponteiro_direita_x, Ponteiro_esquerda_y = arvore_binaria.Calcular_posicao_ponteiro_direita(Raiz_posicao_x, Raiz_posicao_y, Nodulo_altura + 1)
+        canvas.create_line(Raiz_posicao_x, Raiz_posicao_y,
+                           Ponteiro_direita_x, Ponteiro_esquerda_y, 
+                           fill=macros.LINE_COLOR, width=5)
+        Desenha_arvore(Nodulo_raiz.ponteiro_direita, 
+                 Ponteiro_direita_x, Ponteiro_esquerda_y, 
+                 Nodulo_altura + 1,
+                 canvas, janela)
 
-    createOvalWithText(canvas, rootPositionX, rootPositionY, 
-                     NODE_RADIUS, NODE_COLOR, 
-                     rootNode.value, TEXT_COLOR, FONT_SIZE)
-    window.update()
+    createOvalWithText(canvas, Raiz_posicao_x, Raiz_posicao_y, 
+                     macros.NODE_RADIUS, macros.NODE_COLOR, 
+                     Nodulo_raiz.value, macros.TEXT_COLOR, macros.FONT_SIZE)
+    janela.update()
 
 
-def clearCanvasAndDrawTree():
-        treePositionX = WINDOW_WIDTH/2
-        treePositionY = Y_PADDING
+def Limpar_Canvas_e_desenha_arvore():
+        Posicao_arvore_x = macros.WINDOW_WIDTH/2
+        Posicao_arvore_y = macros.Y_PADDING
         canvas.delete("all")
-        drawTree(rootNode, treePositionX, treePositionY, 0, canvas, window)
+        Desenha_arvore(Nodulo_raiz, Posicao_arvore_x, Posicao_arvore_y, 0, canvas, janela)
 
 
 def createOvalWithText(canvas, centerX, centerY, radius, ovalColor, text, textColor, fontSize):
@@ -55,118 +60,121 @@ def createRectangleWithText(canvas, centerX, centerY, width, height, rectangleCo
                        text=text, fill=textColor, font=("Arial " + str(int(fontSize)) + " bold"))
 
 
-def isInputValid(value) -> bool:
+def Validar_input(value) -> bool:
     try:
         value = int(value)
+    
     except ValueError:
-        showerror(title="ERROR", message="Invalid input")
+        showerror(title="ERROR", message="Entrada Inválida")
         return False
 
-    if value > MAX_VALUE:
-        showerror(title="ERROR", message="Input value exceeding max allowed")
+    if value > macros.MAX_VALUE:
+        showerror(title="ERROR", message="Entrada excedeu o máximo permitido")
         return False
-    if value < MIN_VALUE:
-        showerror(title="ERROR", message="Input value under min allowed")
+    
+    if value < macros.MIN_VALUE:
+        showerror(title="ERROR", message="Entrada ficou abaixo do mínimo permitido")
         return False
+    
     return True
 
 
-def onClickInsert(value):
-    global rootNode
+def Botao_inserir(value):
+    global Nodulo_raiz
 
-    if not isInputValid(value):
+    if not Validar_input(value):
         return
 
     value = int(value)
 
-    rootPositionX = WINDOW_WIDTH/2
-    rootPositionY = Y_PADDING
+    Raiz_posicao_x = macros.WINDOW_WIDTH/2
+    Raiz_posicao_y = macros.Y_PADDING
 
-    disableUI()
+    Desabilitar_interface()
 
-    rootNode = insertNode(rootNode, value, rootPositionX, rootPositionY, 0, canvas, window)
+    Nodulo_raiz = arvore_binaria.Inserir_nodulo(Nodulo_raiz, value, Raiz_posicao_x, Raiz_posicao_y, 0, canvas, janela)
 
     sleep(1)
 
     canvas.delete("all")
-    drawTree(rootNode, rootPositionX, rootPositionY, 0, canvas, window)
+    Desenha_arvore(Nodulo_raiz, Raiz_posicao_x, Raiz_posicao_y, 0, canvas, janela)
 
-    enableUI()
+    Habilitar_interface()
 
 
-def onClickSearch(value):
-    if not isInputValid(value):
+def Botao_busca(value):
+    if not Validar_input(value):
         return
 
     value = int(value)
 
-    rootPositionX = WINDOW_WIDTH/2
-    rootPositionY = Y_PADDING
+    Raiz_posicao_x = macros.WINDOW_WIDTH/2
+    Raiz_posicao_y = macros.Y_PADDING
 
-    disableUI()
+    Desabilitar_interface()
 
-    searchTree(rootNode, value, rootPositionX, rootPositionY, 0, canvas, window)
+    searchTree(Nodulo_raiz, value, Raiz_posicao_x, Raiz_posicao_y, 0, canvas, janela)
 
     sleep(1)
 
     canvas.delete("all")
-    drawTree(rootNode, rootPositionX, rootPositionY, 0, canvas, window)
+    Desenha_arvore(Nodulo_raiz, Raiz_posicao_x, Raiz_posicao_y, 0, canvas, janela)
     
-    enableUI()
+    Habilitar_interface()
 
 
-def onClickDelete(value):
-    global rootNode
+def Botao_deletar(value):
+    global Nodulo_raiz
 
-    if not isInputValid(value):
+    if not Validar_input(value):
         return
 
     value = int(value)
 
-    rootPositionX = WINDOW_WIDTH/2
-    rootPositionY = Y_PADDING
+    Raiz_posicao_x = macros.WINDOW_WIDTH/2
+    Raiz_posicao_y = macros.Y_PADDING
 
-    disableUI()
+    Desabilitar_interface()
 
-    rootNode = deleteNode(rootNode, value, rootPositionX, rootPositionY, 0, canvas, window)
+    Nodulo_raiz = deleteNode(Nodulo_raiz, value, Raiz_posicao_x, Raiz_posicao_y, 0, canvas, janela)
 
     sleep(1)
 
     canvas.delete("all")
-    drawTree(rootNode, rootPositionX, rootPositionY, 0, canvas, window)
+    Desenha_arvore(Nodulo_raiz, Raiz_posicao_x, Raiz_posicao_y, 0, canvas, janela)
     
-    enableUI()
+    Habilitar_interface()
 
 
-def onClickGenerateRandomTree():
-    global rootNode
+def Botao_gerar_arvore_aleatoria():
+    global Nodulo_raiz
 
-    rootNode = None
+    Nodulo_raiz = None
 
-    numberOfInserts = randint(100, 100)
+    numero_insercoes = randint(100, 100)
 
-    for x in range(numberOfInserts):
-        nodeValue = randint(MIN_VALUE, MAX_VALUE)
-        rootNode = insertNodeWithoutAnimation(rootNode, nodeValue, 0)
+    for x in range(numero_insercoes):
+        nodeValue = randint(macros.MIN_VALUE, macros.MAX_VALUE)
+        Nodulo_raiz = arvore_binaria.Inserir_nodulo_sem_animacao(Nodulo_raiz, nodeValue, 0)
     
-    rootPositionX = WINDOW_WIDTH/2
-    rootPositionY = Y_PADDING
+    Raiz_posicao_x = macros.WINDOW_WIDTH/2
+    Raiz_posicao_y = macros.Y_PADDING
 
     canvas.delete("all")
-    drawTree(rootNode, rootPositionX, rootPositionY, 0, canvas, window)
+    Desenha_arvore(Nodulo_raiz, Raiz_posicao_x, Raiz_posicao_y, 0, canvas, janela)
 
 
-def disableUI():
-    insertButton["state"] = DISABLED
-    generateRandomTreeButton["state"] = DISABLED
-    deleteButton["state"] = DISABLED
-    searchButton["state"] = DISABLED
-    inputField["state"] = DISABLED
+def Desabilitar_interface():
+    Botao_inserir["state"] = DISABLED
+    Botao_gerar_arvore_aleatoria["state"] = DISABLED
+    Botao_deletar["state"] = DISABLED
+    Botao_busca["state"] = DISABLED
+    Botao_inserir["state"] = DISABLED
 
 
-def enableUI():
-    insertButton["state"] = NORMAL
-    generateRandomTreeButton["state"] = NORMAL
-    deleteButton["state"] = NORMAL
-    searchButton["state"] = NORMAL
-    inputField["state"] = NORMAL
+def Habilitar_interface():
+    Botao_inserir["state"] = NORMAL
+    Botao_gerar_arvore_aleatoria["state"] = NORMAL
+    Botao_deletar["state"] = NORMAL
+    Botao_busca["state"] = NORMAL
+    Botao_inserir["state"] = NORMAL
