@@ -549,9 +549,8 @@ background_image = tk.PhotoImage(file = "INF.png")
 limg= Label(window, i=background_image)
 limg.pack()
 """
-=======
+
 inputField = Entry(window, font=("Arial 15"))
 inputField.pack(side=LEFT, expand=0)
-
 
 window.mainloop()
