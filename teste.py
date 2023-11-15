@@ -7,6 +7,7 @@ from random import randint
 from time import sleep
 from tkinter.messagebox import showerror, showinfo
 from venv import create
+from tkinter import ttk
 
 
 NODE_RADIUS = 30
@@ -481,25 +482,73 @@ def enableUI():
     searchButton["state"] = NORMAL
     inputField["state"] = NORMAL
 
+
+def abrir_janela_principal():
+    janela_bem_vindo.destroy()
+    mostrar_janela_principal()
+
+def mostrar_janela_principal():
+    window.deiconify()
+
+# Janela de boas-vindas
+janela_bem_vindo = tk.Tk()
+janela_bem_vindo.title("Seja Bem-Vindo")
+janela_bem_vindo.geometry("300x150")
+
+label_boas_vindas = ttk.Label(janela_bem_vindo, text="Seja bem-vindo!")
+label_boas_vindas.pack(pady=20)
+
+botao_iniciar = ttk.Button(janela_bem_vindo, text="Iniciar", command=abrir_janela_principal)
+botao_iniciar.pack()
+
+# Janela principal (inicialmente oculta)
+window = tk.Tk()
+window.withdraw()
+
+# Configuração da janela principal
+
 window.geometry(str(WINDOW_WIDTH) + "x" + str(WINDOW_HEIGHT) + "+100-100")
 window.resizable(False, False)
+
 window.title("Binary Search Tree Visualizer")
+window.geometry("1200x1200")
 
-canvas = Canvas(window, bg=BACKGROUND_COLOR)
-canvas.pack(side=TOP, fill=BOTH, expand=2)
+# Frame lateral para o menu
+menu_frame = tk.Frame(window, width=200, bg="lightgray")
+menu_frame.grid(row=0, column=0, sticky="nsew")
 
-generateRandomTreeButton = Button(window, text="Generate Random Tree", font=("Arial 15"), 
-                      command=lambda:onClickGenerateRandomTree())
-generateRandomTreeButton.pack(side=LEFT, fill=X, expand=1)
+#menu lateral
+inputField = tk.Entry(menu_frame)
+inputField.pack(pady=10)
 
-insertButton = Button(window, text="Insert", font=("Arial 15"), command=lambda:onClickInsert(inputField.get()))
-insertButton.pack(side=LEFT, fill=X, expand=1)
+generateRandomTreeButton = ttk.Button(menu_frame, text="Generate Random Tree", command=onClickGenerateRandomTree)
+generateRandomTreeButton.pack(pady=10)
 
-deleteButton = Button(window, text="Delete", font=("Arial 15"), command=lambda:onClickDelete(inputField.get()))
-deleteButton.pack(side=LEFT, fill=X, expand=1)
+insertButton = ttk.Button(menu_frame, text="Insert", command=lambda: onClickInsert(inputField.get()))
+insertButton.pack(pady=10)
 
-searchButton = Button(window, text="Search", font=("Arial 15"), command=lambda:onClickSearch(inputField.get()))
-searchButton.pack(side=LEFT, fill=X, expand=1)
+deleteButton = ttk.Button(menu_frame, text="Delete", command=lambda: onClickDelete(inputField.get()))
+deleteButton.pack(pady=10)
+
+searchButton = ttk.Button(menu_frame, text="Search", command=lambda: onClickSearch(inputField.get()))
+searchButton.pack(pady=10)
+
+# Canvas usando grid
+canvas = tk.Canvas(window, width=1000, height=1200, bg="white")
+canvas.grid(row=0, column=1, sticky="nsew")
+
+# Configuração de peso para permitir redimensionamento
+window.grid_rowconfigure(0, weight=1)
+window.grid_columnconfigure(1, weight=1)
+
+janela_bem_vindo.mainloop()
+
+
+""""
+background_image = tk.PhotoImage(file = "INF.png")
+limg= Label(window, i=background_image)
+limg.pack()
+"""
 
 inputField = Entry(window, font=("Arial 15"))
 inputField.pack(side=LEFT, expand=0)
