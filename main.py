@@ -3,7 +3,7 @@
 """
 import macros
 from tkinter import *
-import primeira_janela
+import visualizador_janela
 
 
 janela = Tk()
@@ -17,25 +17,25 @@ canvas.pack(side=TOP, fill=BOTH, expand=2)
 Gerar_arvore_aleatoria_botao_componente = Button(janela, 
                                                  text="Gerar Aleatório", 
                                                  font=("Arial 15"), 
-                                                 command=lambda:primeira_janela.Botao_gerar_arvore_aleatoria())
+                                                 command=lambda:visualizador_janela.Botao_gerar_arvore_aleatoria())
 Gerar_arvore_aleatoria_botao_componente.pack(side=LEFT, fill=X, expand=1)
 
 Inserir_botao_componente = Button(janela, 
                                   text="Inserir", 
                                   font=("Arial 15"), 
-                                  command=lambda:primeira_janela.Botao_inserir(Input_espaco.get()))
+                                  command=lambda:visualizador_janela.Botao_inserir(Input_espaco.get()))
 Inserir_botao_componente.pack(side=LEFT, fill=X, expand=1)
 
 Deletar_botao_componente = Button(janela, 
                                   text="Deletar", 
                                   font=("Arial 15"), 
-                                  command=lambda:primeira_janela.Botao_deletar(Input_espaco.get()))
+                                  command=lambda:visualizador_janela.Botao_deletar(Input_espaco.get()))
 Deletar_botao_componente.pack(side=LEFT, fill=X, expand=1)
 
 Buscar_botao_componente = Button(janela, 
                                  text="Buscar", 
                                  font=("Arial 15"), 
-                                 command=lambda:primeira_janela.Botao_busca(Input_espaco.get()))
+                                 command=lambda:visualizador_janela.Botao_busca(Input_espaco.get()))
 Buscar_botao_componente.pack(side=LEFT, fill=X, expand=1)
 
 Input_espaco = Entry(janela, font=("Arial 15"))

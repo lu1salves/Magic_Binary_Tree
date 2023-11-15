@@ -2,11 +2,13 @@ from cgitb import enable
 from lib2to3.pgen2.token import NUMBER
 from tkinter import *
 import tkinter as tk
+from tkinter import ttk
 from random import randint
 from time import sleep
 from tkinter.messagebox import showerror, showinfo
 from venv import create
 from tkinter import ttk
+
 
 NODE_RADIUS = 30
 BACKGROUND_COLOR = "white"
@@ -37,19 +39,16 @@ class Node:
         self.leftChild = None
         self.rightChild = None
 
-#feito
 def calculateLeftChildPosition(parentPositionX, parentPositionY, childDepth):
     leftChildPositionX = parentPositionX - ((WINDOW_WIDTH - X_PADDING) / pow(2, childDepth)) / 2
     leftChildPositionY = parentPositionY + NODE_RADIUS * 4
     return (leftChildPositionX, leftChildPositionY)
 
-#feito
 def calculateRightChildPosition(parentPositionX, parentPositionY, childDepth):
     rightChildPositionX = parentPositionX + ((WINDOW_WIDTH - X_PADDING) / pow(2, childDepth)) / 2
     rightChildPositionY = parentPositionY + NODE_RADIUS * 4
     return (rightChildPositionX, rightChildPositionY)
 
-#feito
 def insertNode(rootNode, value, rootPositionX, rootPositionY, nodeDepth, canvas, window):
     if nodeDepth > MAX_DEPTH:
         showinfo(title="Insert", message="Max depth reached")
@@ -94,7 +93,6 @@ def insertNode(rootNode, value, rootPositionX, rootPositionY, nodeDepth, canvas,
 
     return rootNode
 
-
 def insertNodeWithoutAnimation(rootNode, value, nodeDepth):
     if nodeDepth > MAX_DEPTH:
         return rootNode
@@ -109,7 +107,6 @@ def insertNodeWithoutAnimation(rootNode, value, nodeDepth):
         rootNode.rightChild = insertNodeWithoutAnimation(rootNode.rightChild, value, nodeDepth + 1)
 
     return rootNode
-
 
 def searchTree(rootNode, value, rootPositionX, rootPositionY, nodeDepth, canvas, window):
     if rootNode is None:
@@ -155,7 +152,6 @@ def searchTree(rootNode, value, rootPositionX, rootPositionY, nodeDepth, canvas,
                             value, HIGHLIGHT_TEXT_COLOR, FONT_SIZE)
         window.update()
         sleep(ANIMATION_DELAY)
-
 
 def deleteNode(rootNode, value, rootPositionX, rootPositionY, nodeDepth, canvas, window):
     if rootNode is None:
@@ -275,7 +271,6 @@ def deleteNode(rootNode, value, rootPositionX, rootPositionY, nodeDepth, canvas,
                                              canvas, window)
     return rootNode
 
-
 def getMinNodeValue(rootNode, rootPositionX, rootPositionY, nodeDepth, canvas, window):
 
     if rootNode.leftChild is None:
@@ -302,7 +297,6 @@ def getMinNodeValue(rootNode, rootPositionX, rootPositionY, nodeDepth, canvas, w
                             nodeDepth + 1, 
                             canvas, window)
 
-    
 def getMaxNodeValue(rootNode, rootPositionX, rootPositionY, nodeDepth, canvas, window):
 
     if rootNode.rightChild is None:
@@ -329,8 +323,6 @@ def getMaxNodeValue(rootNode, rootPositionX, rootPositionY, nodeDepth, canvas, w
                                 nodeDepth + 1, 
                                 canvas, window)
 
-
-#separar daqui pra frente em outro arquivo
 def drawTree(rootNode, rootPositionX, rootPositionY, nodeDepth, canvas, window):
     if rootNode is None:
         return
@@ -360,13 +352,11 @@ def drawTree(rootNode, rootPositionX, rootPositionY, nodeDepth, canvas, window):
                      rootNode.value, TEXT_COLOR, FONT_SIZE)
     window.update()
 
-
 def clearCanvasAndDrawTree():
         treePositionX = WINDOW_WIDTH/2
         treePositionY = Y_PADDING
         canvas.delete("all")
         drawTree(rootNode, treePositionX, treePositionY, 0, canvas, window)
-
 
 def createOvalWithText(canvas, centerX, centerY, radius, ovalColor, text, textColor, fontSize):
     oval = canvas.create_oval(centerX - radius, centerY - radius,
@@ -375,14 +365,12 @@ def createOvalWithText(canvas, centerX, centerY, radius, ovalColor, text, textCo
     text = canvas.create_text(centerX, centerY,
                        text=text, fill=textColor, font=("Arial " + str(int(fontSize)) + " bold"))
 
-
 def createRectangleWithText(canvas, centerX, centerY, width, height, rectangleColor, text, textColor, fontSize):
     canvas.create_rectangle(centerX - width / 2, centerY - height / 2,
                             centerX + width / 2, centerY + height / 2,
                             fill=rectangleColor, width=0)
     canvas.create_text(centerX, centerY,
                        text=text, fill=textColor, font=("Arial " + str(int(fontSize)) + " bold"))
-
 
 def isInputValid(value) -> bool:
     try:
@@ -398,7 +386,6 @@ def isInputValid(value) -> bool:
         showerror(title="ERROR", message="Input value under min allowed")
         return False
     return True
-
 
 def onClickInsert(value):
     global rootNode
@@ -422,7 +409,6 @@ def onClickInsert(value):
 
     enableUI()
 
-
 def onClickSearch(value):
     if not isInputValid(value):
         return
@@ -442,7 +428,6 @@ def onClickSearch(value):
     drawTree(rootNode, rootPositionX, rootPositionY, 0, canvas, window)
     
     enableUI()
-
 
 def onClickDelete(value):
     global rootNode
@@ -466,7 +451,6 @@ def onClickDelete(value):
     
     enableUI()
 
-
 def onClickGenerateRandomTree():
     global rootNode
 
@@ -484,7 +468,6 @@ def onClickGenerateRandomTree():
     canvas.delete("all")
     drawTree(rootNode, rootPositionX, rootPositionY, 0, canvas, window)
 
-
 def disableUI():
     insertButton["state"] = DISABLED
     generateRandomTreeButton["state"] = DISABLED
@@ -492,13 +475,13 @@ def disableUI():
     searchButton["state"] = DISABLED
     inputField["state"] = DISABLED
 
-
 def enableUI():
     insertButton["state"] = NORMAL
     generateRandomTreeButton["state"] = NORMAL
     deleteButton["state"] = NORMAL
     searchButton["state"] = NORMAL
     inputField["state"] = NORMAL
+
 
 def abrir_janela_principal():
     janela_bem_vindo.destroy()
@@ -523,6 +506,10 @@ window = tk.Tk()
 window.withdraw()
 
 # Configuração da janela principal
+
+window.geometry(str(WINDOW_WIDTH) + "x" + str(WINDOW_HEIGHT) + "+100-100")
+window.resizable(False, False)
+
 window.title("Binary Search Tree Visualizer")
 window.geometry("1200x1200")
 
@@ -556,9 +543,15 @@ window.grid_columnconfigure(1, weight=1)
 
 janela_bem_vindo.mainloop()
 
+
 """"
 background_image = tk.PhotoImage(file = "INF.png")
 limg= Label(window, i=background_image)
 limg.pack()
 """
+=======
+inputField = Entry(window, font=("Arial 15"))
+inputField.pack(side=LEFT, expand=0)
+
+
 window.mainloop()

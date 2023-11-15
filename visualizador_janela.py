@@ -5,6 +5,7 @@ from time import sleep
 from random import randint
 import arvore_binaria
 from main import janela, canvas
+from canvas import createOvalWithText, createRectangleWithText
 
 def Desenha_arvore(Nodulo_raiz, Raiz_posicao_x, Raiz_posicao_y, Nodulo_altura, canvas, janela):
     if Nodulo_raiz is None:
@@ -21,42 +22,32 @@ def Desenha_arvore(Nodulo_raiz, Raiz_posicao_x, Raiz_posicao_y, Nodulo_altura, c
                  canvas, janela)
 
     if Nodulo_raiz.ponteiro_direita is not None:
-        Ponteiro_direita_x, Ponteiro_esquerda_y = arvore_binaria.Calcular_posicao_ponteiro_direita(Raiz_posicao_x, Raiz_posicao_y, Nodulo_altura + 1)
-        canvas.create_line(Raiz_posicao_x, Raiz_posicao_y,
-                           Ponteiro_direita_x, Ponteiro_esquerda_y, 
-                           fill=macros.LINE_COLOR, width=5)
-        Desenha_arvore(Nodulo_raiz.ponteiro_direita, 
-                 Ponteiro_direita_x, Ponteiro_esquerda_y, 
-                 Nodulo_altura + 1,
-                 canvas, janela)
+        Ponteiro_direita_x, Ponteiro_esquerda_y = arvore_binaria.Calcular_posicao_ponteiro_direita(Raiz_posicao_x, 
+                                                                                                   Raiz_posicao_y, 
+                                                                                                   Nodulo_altura + 1)
+        canvas.create_line(Raiz_posicao_x, 
+                           Raiz_posicao_y,
+                           Ponteiro_direita_x, 
+                           Ponteiro_esquerda_y, 
+                           fill=macros.LINE_COLOR, 
+                           width=5)
+        Desenha_arvore(Nodulo_raiz.ponteiro_direita,
+                       Ponteiro_direita_x, 
+                       Ponteiro_esquerda_y,
+                       Nodulo_altura + 1,
+                       canvas, 
+                       janela)
 
-    createOvalWithText(canvas, Raiz_posicao_x, Raiz_posicao_y, 
-                     macros.NODE_RADIUS, macros.NODE_COLOR, 
-                     Nodulo_raiz.value, macros.TEXT_COLOR, macros.FONT_SIZE)
+    createOvalWithText(canvas, 
+                       Raiz_posicao_x, 
+                       Raiz_posicao_y,
+                       macros.NODE_RADIUS,
+                       macros.NODE_COLOR,
+                       Nodulo_raiz.value, 
+                       macros.TEXT_COLOR, 
+                       macros.FONT_SIZE)
     janela.update()
 
-
-def Limpar_Canvas_e_desenha_arvore():
-        Posicao_arvore_x = macros.WINDOW_WIDTH/2
-        Posicao_arvore_y = macros.Y_PADDING
-        canvas.delete("all")
-        Desenha_arvore(Nodulo_raiz, Posicao_arvore_x, Posicao_arvore_y, 0, canvas, janela)
-
-
-def createOvalWithText(canvas, centerX, centerY, radius, ovalColor, text, textColor, fontSize):
-    oval = canvas.create_oval(centerX - radius, centerY - radius,
-                       centerX + radius, centerY + radius,
-                       fill=ovalColor, width=0)
-    text = canvas.create_text(centerX, centerY,
-                       text=text, fill=textColor, font=("Arial " + str(int(fontSize)) + " bold"))
-
-
-def createRectangleWithText(canvas, centerX, centerY, width, height, rectangleColor, text, textColor, fontSize):
-    canvas.create_rectangle(centerX - width / 2, centerY - height / 2,
-                            centerX + width / 2, centerY + height / 2,
-                            fill=rectangleColor, width=0)
-    canvas.create_text(centerX, centerY,
-                       text=text, fill=textColor, font=("Arial " + str(int(fontSize)) + " bold"))
 
 
 def Validar_input(value) -> bool:
