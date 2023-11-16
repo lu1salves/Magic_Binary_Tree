@@ -34,3 +34,16 @@ pip install pillow
 pip install cgitb
 pip install lib2to3
 pip install venv
+```
+Certifique-se de estar utilizando um ambiente virtual antes de instalar as dependências. Se você ainda não tiver o pip instalado, você pode instalá-lo seguindo as instruções em https://pip.pypa.io/en/stable/installation/.
+
+## Execução
+
+Após terminar de instalar tudo:
+Abra seu terminal na pasta do projeto e digite:
+
+```bash
+python3 magicTree.py 
+```    
+
+Agora é só brincar com a árvore mágica
